@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
      exit(-1);
   }
 	
-  cout << "Timestamp;Current_A;Voltage;Watts" << endl;
+  fprintf(stdout, "Timestamp;Current_A;Voltage;Watts\n");
   
   buf[1] = REQUEST_DATA;
   long run=0;
@@ -119,7 +119,10 @@ int main(int argc, char *argv[])
     //     cout << wh << endl;
 
          //file << (run*100) << "," << volt << "," << ampere << "," << watt << "," << wh << endl;
-	 cout << (t0.tv_sec*1e6+t0.tv_usec) << ";" << ampere << ";" << volt << ";" << watt << endl;
+	 //cout << (t0.tv_sec*1e6+t0.tv_usec) << ";" << ampere << ";" << volt << ";" << watt << endl;
+	fprintf(stdout, "%.0f;%s;%s;%s\n",
+		(t0.tv_sec*1e6+t0.tv_usec),
+		ampere, volt, watt);
       } else {
          first=false;
       }
