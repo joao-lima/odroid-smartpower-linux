@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <fstream>
 #include "hidapi.h"
+#include <sys/time.h>
 
 using namespace std;
 
@@ -45,8 +46,9 @@ int main(int argc, char *argv[])
     exit(-1);
   }
 
-  ofstream file;
-  file.open(argv[1]);
+//  ofstream file;
+//  file.open(argv[1]);
+  struct timeval t0;
   hid_device* device;
   unsigned char buf[MAX_STR];
   buf[0]=0x00;
@@ -83,11 +85,14 @@ int main(int argc, char *argv[])
      cerr << "error" << endl;
      exit(-1);
   }
+	
+  cout << "Timestamp;Current_A;Voltage;Watts" << endl;
   
   buf[1] = REQUEST_DATA;
   long run=0;
   bool first=true;
   while (true) {
+     gettimeofday(&t0, 0);
     if (hid_write(device,buf,sizeof(buf))==-1) {
       cerr << "error" << endl;
       exit(-1);
@@ -111,9 +116,10 @@ int main(int argc, char *argv[])
          char wh[7]={'\0'};
          strncpy(wh,(char*)&buf[26],5);
 
-         cout << wh << endl;
+    //     cout << wh << endl;
 
-         file << (run*100) << "," << volt << "," << ampere << "," << watt << "," << wh << endl;
+         //file << (run*100) << "," << volt << "," << ampere << "," << watt << "," << wh << endl;
+	 cout << (t0.tv_sec*1e6+t0.tv_usec) << ";" << ampere << ";" << volt << ";" << watt << endl;
       } else {
          first=false;
       }
@@ -129,6 +135,6 @@ int main(int argc, char *argv[])
      exit(-1);
   }
 
-  file.close();
+  //file.close();
   hid_close(device);
 }
