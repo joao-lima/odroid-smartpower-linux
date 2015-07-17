@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
      exit(-1);
   }
 	
-  fprintf(stdout, "Timestamp;Current_A;Voltage;Watts\n");
+  fprintf(stdout, "Architecture;Timestamp;Current_A;Voltage;Watts\n");
   
   buf[1] = REQUEST_DATA;
   long run=0;
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 
          //file << (run*100) << "," << volt << "," << ampere << "," << watt << "," << wh << endl;
 	 //cout << (t0.tv_sec*1e6+t0.tv_usec) << ";" << ampere << ";" << volt << ";" << watt << endl;
-	fprintf(stdout, "%.0f;%s;%s;%s\n",
+	fprintf(stdout, "odroid;%.0f;%s;%s;%s\n",
 		(t0.tv_sec*1e6+t0.tv_usec),
 		ampere, volt, watt);
       } else {
