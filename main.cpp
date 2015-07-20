@@ -119,12 +119,16 @@ int main(int argc, char *argv[])
          strncpy(wh,(char*)&buf[26],5);
 
     //     cout << wh << endl;
+    	double fampere = atof(ampere);
+	double fvolt = atof(volt);
+	double fwatt = fampere*fvolt;
 
          //file << (run*100) << "," << volt << "," << ampere << "," << watt << "," << wh << endl;
 	 //cout << (t0.tv_sec*1e6+t0.tv_usec) << ";" << ampere << ";" << volt << ";" << watt << endl;
-	fprintf(stdout, "odroid;%.0f;%s;%s;%s\n",
+	fprintf(stdout, "odroid;%.0f;%.3f;%.3f;%.3f\n",
 		(t0.tv_sec*1e6+t0.tv_usec),
-		ampere, volt, watt);
+		fampere, fvolt, fwatt);
+	fflush(stdout);
       } else {
          first=false;
       }
